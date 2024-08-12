@@ -103,7 +103,7 @@ if uploaded_file is not None:
     st.markdown("""
         <style>
             .stButton button {
-                width: 150px;
+                width: 180px;
                 height: 40px;
                 font-size: 26px;
                 font-weight: bold;
@@ -122,7 +122,7 @@ if uploaded_file is not None:
     col1, col2, col3 = st.columns([1, 3, 1])
     
     with col1:
-        plot_button = st.button("Preview Data")
+        plot_button = st.button("Preview Spectral Data")
     
     with col3:
         run_model_button = st.button("Run the Model")
