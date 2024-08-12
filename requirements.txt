@@ -3,5 +3,5 @@ joblib
 numpy
 pandas
 scikit-learn
-plotly==5.0.0
+plotly
 
