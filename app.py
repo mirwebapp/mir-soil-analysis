@@ -69,7 +69,7 @@ st.sidebar.image('Data_Format.png', caption='Example of the CSV format')
 
 # Dropdown to select which property to predict
 property_selection = st.selectbox(
-    'Select soil property to  make predictions:',
+    'Select Property to Predict:',
     ['Cu', 'Zn', 'Fe', 'Mn', 'All']
 )
 
@@ -97,12 +97,12 @@ if uploaded_file is not None:
         spectra = pd.DataFrame(spectra)  # Convert back to DataFrame for easier handling
 
     # Number input to select the number of rows to plot
-    num_rows = st.number_input("Enter the number of rows to preview spectral data:", min_value=1, max_value=spectra.shape[0], value=5, step=1)
+    num_rows = st.number_input("Enter the number of rows to display spectra plot:", min_value=1, max_value=spectra.shape[0], value=5, step=1)
 
-    # Layout the buttons in a single row
+    # Layout the buttons in a single row with improved spacing
     st.markdown("""
         <style>
-            .stButton {
+            .stButton button {
                 width: 150px;
                 height: 40px;
                 font-size: 26px;
@@ -119,19 +119,13 @@ if uploaded_file is not None:
     """, unsafe_allow_html=True)
     
     # Container for buttons
-    col1, col2 = st.columns([1,1])
+    col1, col2, col3 = st.columns([1, 3, 1])
     
     with col1:
-        if st.button("Preview Spectral Data"):
-            plot_button = True
-        else:
-            plot_button = False
+        plot_button = st.button("Plot Spectral")
     
-    with col2:
-        if st.button("Run the Model"):
-            run_model_button = True
-        else:
-            run_model_button = False
+    with col3:
+        run_model_button = st.button("Run Model")
 
     if plot_button:
         selected_spectra = spectra.iloc[:num_rows, :]
@@ -192,4 +186,4 @@ if uploaded_file is not None:
         
         # Option to download the results
         csv = results.to_csv(index=False).encode('utf-8')
-        st.download_button(label="Download the model predictions as CSV", data=csv, file_name='predictions.csv', mime='text/csv')
+        st.download_button(label="Download predictions as CSV", data=csv, file_name='predictions.csv', mime='text/csv')
