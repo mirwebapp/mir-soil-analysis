@@ -128,7 +128,7 @@ if uploaded_file is not None:
             plot_button = False
     
     with col2:
-        if st.button("Run Model"):
+        if st.button("Run the Model"):
             run_model_button = True
         else:
             run_model_button = False
