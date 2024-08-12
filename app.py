@@ -69,7 +69,7 @@ st.sidebar.image('Data_Format.png', caption='Example of the CSV format')
 
 # Dropdown to select which property to predict
 property_selection = st.selectbox(
-    'Select Property to Predict:',
+    'Select soil property to  make predictions:',
     ['Cu', 'Zn', 'Fe', 'Mn', 'All']
 )
 
@@ -97,7 +97,7 @@ if uploaded_file is not None:
         spectra = pd.DataFrame(spectra)  # Convert back to DataFrame for easier handling
 
     # Number input to select the number of rows to plot
-    num_rows = st.number_input("Enter the number of rows to display spectra plot:", min_value=1, max_value=spectra.shape[0], value=5, step=1)
+    num_rows = st.number_input("Enter the number of rows to preview spectral data:", min_value=1, max_value=spectra.shape[0], value=5, step=1)
 
     # Layout the buttons in a single row
     st.markdown("""
@@ -122,7 +122,7 @@ if uploaded_file is not None:
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        if st.button("Plot Spectral"):
+        if st.button("Preview Spectral Data"):
             plot_button = True
         else:
             plot_button = False
@@ -192,4 +192,4 @@ if uploaded_file is not None:
         
         # Option to download the results
         csv = results.to_csv(index=False).encode('utf-8')
-        st.download_button(label="Download predictions as CSV", data=csv, file_name='predictions.csv', mime='text/csv')
+        st.download_button(label="Download the model predictions as CSV", data=csv, file_name='predictions.csv', mime='text/csv')
