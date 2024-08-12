@@ -119,7 +119,7 @@ if uploaded_file is not None:
     """, unsafe_allow_html=True)
     
     # Container for buttons
-    col1, blank_col, col2 = st.columns([1,3,1])
+    col1, col2 = st.columns([1,1])
     
     with col1:
         if st.button("Preview Spectral Data"):
