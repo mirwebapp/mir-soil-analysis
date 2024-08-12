@@ -135,35 +135,28 @@ if uploaded_file is not None:
 
     if plot_button:
         selected_spectra = spectra.iloc[:num_rows, :]
-
+    
+        # Extracting the wavelength headings from the columns
+        wavelengths = selected_spectra.columns
+        
         fig = go.Figure()
-
         for i in range(num_rows):
             fig.add_trace(go.Scatter(
-                x=x_values,
+                x=wavelengths,
                 y=selected_spectra.iloc[i, :],
                 mode='lines',
-                name=f"{ids.iloc[i]}"
+                name=f"{ids.iloc[i]}",
+                line=dict(width=2)
             ))
-
-        # Define the interval for x-axis labels to avoid congestion
-        display_interval = 30  # Display every 30th label; adjust as needed
-        tick_indices = np.arange(0, len(x_values), display_interval)
-        tick_vals = [x_values[i] for i in tick_indices]
-
         fig.update_layout(
-            title="Spectral Plot",
-            xaxis_title="Wavelength (cm⁻¹)",
+            title="Spectra Plot",
+            xaxis_title="Wavelength",
             yaxis_title="Absorbance",
             legend_title="Sample ID",
             margin=dict(l=0, r=0, t=30, b=0),
-            xaxis=dict(
-                tickvals=tick_indices,  # Indices of ticks to display
-                ticktext=tick_vals,     # Labels for the ticks
-                tickangle=-90           # Optional: Rotate labels if needed
-            )
+            template='plotly_white',  # Optional: 'plotly_dark' for dark mode
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
         )
-
         st.plotly_chart(fig)
 
     if run_model_button:
