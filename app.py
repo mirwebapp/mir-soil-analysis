@@ -69,12 +69,12 @@ st.sidebar.image('Data_Format.png', caption='Example of the CSV format')
 
 # Dropdown to select which property to predict
 property_selection = st.selectbox(
-    'Select Property to Predict:',
+    'Select soil property to  make predictions:',
     ['Cu', 'Zn', 'Fe', 'Mn', 'All']
 )
 
 # File uploader for CSV
-uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
+uploaded_file = st.file_uploader("Upload your CSV file.", type="csv")
 
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
@@ -83,9 +83,7 @@ if uploaded_file is not None:
     ids = data.iloc[:, 0]
     spectra = data.iloc[:, 1:]
     
-    # Retrieve the spectral ranges from the column headers
-    x_values = spectra.columns.astype(str)  # Ensure headers are strings
-    
+        
     # Handle varied number of columns by truncating or padding
     expected_columns = 1714  # Change to the expected number of features
     if spectra.shape[1] > expected_columns:
@@ -97,13 +95,13 @@ if uploaded_file is not None:
         spectra = pd.DataFrame(spectra)  # Convert back to DataFrame for easier handling
 
     # Number input to select the number of rows to plot
-    num_rows = st.number_input("Enter the number of rows to display spectra plot:", min_value=1, max_value=spectra.shape[0], value=5, step=1)
+    num_rows = st.number_input("Enter the number of rows to preview spectral data:", min_value=1, max_value=spectra.shape[0], value=5, step=1)
 
-    # Layout the buttons in a single row
+    # Layout the buttons in a single row with improved spacing
     st.markdown("""
         <style>
-            .stButton {
-                width: 150px;
+            .stButton button {
+                width: 180px;
                 height: 40px;
                 font-size: 26px;
                 font-weight: bold;
@@ -119,19 +117,13 @@ if uploaded_file is not None:
     """, unsafe_allow_html=True)
     
     # Container for buttons
-    col1, col2 = st.columns([1, 1])
+    col1, col2, col3 = st.columns([1, 3, 1])
     
     with col1:
-        if st.button("Plot Spectral"):
-            plot_button = True
-        else:
-            plot_button = False
+        plot_button = st.button("Preview Spectral Data")
     
-    with col2:
-        if st.button("Run Model"):
-            run_model_button = True
-        else:
-            run_model_button = False
+    with col3:
+        run_model_button = st.button("Run the Model")
 
     if plot_button:
         selected_spectra = spectra.iloc[:num_rows, :]
@@ -155,7 +147,7 @@ if uploaded_file is not None:
             legend_title="Sample ID",
             margin=dict(l=0, r=0, t=30, b=0),
             template='plotly_white',  # Optional: 'plotly_dark' for dark mode
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+            
         )
         st.plotly_chart(fig)
 
@@ -185,4 +177,4 @@ if uploaded_file is not None:
         
         # Option to download the results
         csv = results.to_csv(index=False).encode('utf-8')
-        st.download_button(label="Download predictions as CSV", data=csv, file_name='predictions.csv', mime='text/csv')
+        st.download_button(label="Download the predictions as CSV File", data=csv, file_name='predictions.csv', mime='text/csv')
