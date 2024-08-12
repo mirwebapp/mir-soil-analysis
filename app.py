@@ -74,7 +74,7 @@ property_selection = st.selectbox(
 )
 
 # File uploader for CSV
-uploaded_file = st.file_uploader("Upload your CSV file", type="csv")
+uploaded_file = st.file_uploader("Upload your CSV file.", type="csv")
 
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
@@ -103,7 +103,7 @@ if uploaded_file is not None:
     st.markdown("""
         <style>
             .stButton button {
-                width: 150px;
+                width: 200px;
                 height: 40px;
                 font-size: 26px;
                 font-weight: bold;
